@@ -21,11 +21,10 @@ class QuestionRetrieveAPIView(RetrieveAPIView):
     queryset = Question.objects.all()
 
     def post(self, request, *args, **kwargs):
-        answer_correct = sorted([answer_id.id for answer_id in Answer.objects.filter(Q(question_id=kwargs.get('pk')) &
-                                                                      Q(is_correct=True))])
-        input_user = [answer_id.split(',') for answer_id in dict(request.data).get('id')]
-        input_answer = sorted(list(map(int, input_user[0])))
-        if answer_correct == input_answer:
+        question = Question.objects.filter(id=kwargs.get('pk')).first()
+        answers = question.answer.filter(is_correct=True).values('id', 'answer_text')
+        correct_answers = [{"id": answer.get('id'), "answer_text": answer.get('answer_text')} for answer in answers]
+        if sorted(request.data.get("id")) == sorted([answer.get('id') for answer in correct_answers]):
             return JsonResponse({"result": 'Правильно'})
         else:
-            return JsonResponse({"result": 'Не правильно', "correct_answer": answer_correct})
+            return JsonResponse({"result": 'Не правильно', "correct_answer": correct_answers})
