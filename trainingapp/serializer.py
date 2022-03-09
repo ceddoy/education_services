@@ -24,14 +24,8 @@ class AnswersForQuestionModelSerializer(serializers.ModelSerializer):
 
 
 class QuestionModelSerializer(serializers.ModelSerializer):
-    answers = serializers.SerializerMethodField('get_answers_for_question')
-
-    @staticmethod
-    def get_answers_for_question(obj):
-        answers_list = Answer.objects.filter(question=obj.pk)
-        serializer = AnswersForQuestionModelSerializer(answers_list, many=True)
-        return serializer.data
+    answer = AnswersForQuestionModelSerializer(read_only=True, many=True)
 
     class Meta:
         model = Question
-        fields = ('question_text', 'answers')
+        fields = ('question_text', 'answer')
