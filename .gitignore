@@ -1,0 +1,4 @@
+.idea
+education_services/secrets.py
+
+**/__pycache__/
