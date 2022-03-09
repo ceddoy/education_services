@@ -62,7 +62,7 @@ DATABASES = {
         'USER': secrets.USER,
         'PASSWORD': secrets.PASSWORD,
         'HOST': 'localhost',
-        'PORT': '5433',
+        'PORT': '5440',
     }
 }
 
@@ -95,3 +95,5 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'userapp.User'
