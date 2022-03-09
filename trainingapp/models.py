@@ -20,17 +20,18 @@ class Question(models.Model):
 
     question_text = models.TextField(verbose_name='Текст вопроса')
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, verbose_name='Тема вопроса')
+    answer = models.ManyToManyField('Answer', blank=True, verbose_name='Варианты ответов', related_name='answers_question')
 
     class Meta:
         verbose_name = "Вопрос"
         verbose_name_plural = "Вопросы"
 
     def __str__(self):
-        return f'Вопрос №{self.id} темы: {self.topic.title}'
+        return f'Вопрос №{self.id}'
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='Вопрос')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='Вопрос', related_name='question_answers')
     answer_text = models.CharField(max_length=128, verbose_name='Текст ответа')
     is_correct = models.BooleanField(default=False, verbose_name='Правильный ответ')
 
