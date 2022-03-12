@@ -24,8 +24,8 @@ class AnswersForQuestionModelSerializer(serializers.ModelSerializer):
 
 
 class QuestionModelSerializer(serializers.ModelSerializer):
-    answer = AnswersForQuestionModelSerializer(read_only=True, many=True)
+    answers = AnswersForQuestionModelSerializer(read_only=True, many=True)
 
     class Meta:
         model = Question
-        fields = ('question_text', 'answer')
+        fields = ('question_text', 'answers')
