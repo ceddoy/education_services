@@ -51,7 +51,7 @@ class ResultAnswers(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, verbose_name='Тема')
     count_right_answers = models.PositiveSmallIntegerField(default=0, verbose_name='Количество верных ответов')
     count_wrong_answers = models.PositiveSmallIntegerField(default=0, verbose_name='Количество неверных ответов')
-    list_questions = ArrayField(models.PositiveIntegerField(), verbose_name='Список id вопросов')
+    list_questions = ArrayField(models.PositiveIntegerField(), blank=True, null=True, verbose_name='Список id вопросов')
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата и время изменения')
