@@ -11,6 +11,6 @@ urlpatterns = [
     path('api_auth_token/', obtain_auth_token),
     path('api/topics/', TopicsListView.as_view()),
     path('api/topics/<int:pk>/', TopicRetrieveAPIView.as_view()),
-    path('api/test/<int:pk>/', QuestionRetrieveAPIView.as_view()),
+    path('api/test/<int:pk>/', QuestionRetrieveAPIView.as_view(), name='question'),
     path('silk/', include('silk.urls', namespace='silk')),
 ]
