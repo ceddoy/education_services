@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from trainingapp.models import Topic, Question, Answer
+from trainingapp.models import Topic, Question, Answer, ResultAnswers
 
 
 class AnswersInLine(admin.TabularInline):
     extra = 1
-    model = Question.answer.through
+    model = Question.answers.through
     readonly_fields = ('is_correct_answer',)
 
     def is_correct_answer(self, instance):
@@ -14,14 +14,13 @@ class AnswersInLine(admin.TabularInline):
 
 
 class AnswerViewAdmin(admin.ModelAdmin):
-    list_display = ('question', 'answer_text', 'is_correct')
-    search_fields = ('question__id', 'question__topic__title')
-    raw_id_fields = ('question',)
+    list_display = ('answer_text', 'is_correct')
+    search_fields = ('answer_text',)
 
 
 class QuestionViewAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'topic')
-    search_fields = ('question__id', 'question__topic__title')
+    search_fields = ('topic__title',)
     raw_id_fields = ('topic',)
     inlines = (AnswersInLine,)
     fields = ('topic', 'question_text')
@@ -35,3 +34,4 @@ class TopicViewAdmin(admin.ModelAdmin):
 admin.site.register(Topic, TopicViewAdmin)
 admin.site.register(Question, QuestionViewAdmin)
 admin.site.register(Answer, AnswerViewAdmin)
+admin.site.register(ResultAnswers)
