@@ -5,6 +5,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.reverse import reverse
 
 from trainingapp.models import Question, ResultAnswers
+from trainingapp.tasks import send_email_to_user_result_answers
 
 
 def get_correct_answers(question):
@@ -22,18 +23,20 @@ def result_answer_question(request, **kwargs):
     if sorted(request.data.get("id")) == sorted([answer.get('id') for answer in correct_answers]):
         object_result_answers.count_correct_answer()
         if not object_result_answers.list_questions:
+            send_email_to_user_result_answers.delay(
+                formation_data_for_send_email(request, question, object_result_answers))
             return {"result": 'Правильно, тест окончен',
-                    "result_answers": {"correct": object_result_answers.count_right_answers,
-                                       "wrong": object_result_answers.count_wrong_answers}}
+                    "result_answers": formation_quantity_answers(object_result_answers)}
         return {"result": 'Правильно',
                 'next_question': url}
     else:
         object_result_answers.count_wrong_answer()
         if not object_result_answers.list_questions:
+            send_email_to_user_result_answers.delay(
+                formation_data_for_send_email(request, question, object_result_answers))
             return {"result": 'Неправильно, тест окончен',
                     "correct_answer": correct_answers,
-                    "result_answers": {"correct": object_result_answers.count_right_answers,
-                                       "wrong": object_result_answers.count_wrong_answers}}
+                    "result_answers": formation_quantity_answers(object_result_answers)}
         return {"result": 'Неправильно', "correct_answer": correct_answers, 'next_question': url}
 
 
@@ -58,3 +61,18 @@ def update_and_get_list_questions(object_result_answers, question_id):
         return None
     except ValueError:
         raise ValidationError({"error": 'По данной теме, вы уже прошли тест!'})
+    except AttributeError:
+        raise ValidationError({"error": 'Ой, кажется произошла ошибка. Попробуйте заново пройти тест!'})
+
+
+def formation_quantity_answers(object_result_answers):
+    return {"correct": object_result_answers.count_right_answers,
+            "wrong": object_result_answers.count_wrong_answers}
+
+
+def formation_data_for_send_email(request, question, object_result_answers):
+    return {
+        "user_email": request.user.email,
+        "topic": question.topic.title,
+        "result_answers": formation_quantity_answers(object_result_answers)
+    }
