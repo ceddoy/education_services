@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
 from trainingapp.views import TopicRetrieveAPIView, TopicsListView, QuestionRetrieveAPIView
 from userapp.custom_auth_token import obtain_auth_token
@@ -12,5 +12,4 @@ urlpatterns = [
     path('api/topics/', TopicsListView.as_view()),
     path('api/topics/<int:pk>/', TopicRetrieveAPIView.as_view()),
     path('api/test/<int:pk>/', QuestionRetrieveAPIView.as_view(), name='question'),
-    path('silk/', include('silk.urls', namespace='silk')),
 ]
