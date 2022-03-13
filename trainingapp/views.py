@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 from trainingapp.models import Topic, Question, ResultAnswers
 from trainingapp.serializer import TopicsModelSerializer, TopicModelSerializer, QuestionModelSerializer
-from trainingapp.services import result_response, check_user_for_retesting, create_list_questions
+from trainingapp.services import result_answer_question, check_user_for_retesting, create_list_questions
 
 
 class TopicsListView(ListAPIView):
@@ -37,4 +37,4 @@ class QuestionRetrieveAPIView(RetrieveAPIView):
                                      list_questions=create_list_questions(question.topic))
 
     def post(self, request, *args, **kwargs):
-        return JsonResponse(result_response(request, **kwargs))
+        return JsonResponse(result_answer_question(request, **kwargs))
