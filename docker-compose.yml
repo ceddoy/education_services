@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   db:
-    image: postgres:latest
+    image: postgres:14
     privileged: true
     restart: always
     environment:
@@ -12,7 +12,7 @@ services:
     ports:
       - "5440:5432"
     volumes:
-      - pgdata:/var/lib/postgresql
+      - ./var/data/postgresql:/var/lib/postgresql
   backend:
     build: .
     volumes:
