@@ -5,14 +5,14 @@ services:
     image: postgres:latest
     privileged: true
     restart: always
-    ports:
-      - "5440:5432"
-    volumes:
-      - ./postgres_data:/var/lib/postgresql
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'postgres'
       POSTGRES_DB: "education_services"
+    ports:
+      - "5440:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
   backend:
     build: .
     volumes:
