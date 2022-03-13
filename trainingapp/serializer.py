@@ -19,7 +19,10 @@ class TopicModelSerializer(serializers.ModelSerializer):
         fields = ("id", "title", 'description', 'start_testing_url')
 
     def get_page_begin_testing(self, topic):
-        return get_next_page(Question.objects.filter(topic=topic).first().id)
+        question = Question.objects.filter(topic=topic).first()
+        if question:
+            return get_next_page(question.id)
+        return {'info': 'У данной темы отсутствуют вопросы!'}
 
 
 class AnswersForQuestionModelSerializer(serializers.ModelSerializer):
