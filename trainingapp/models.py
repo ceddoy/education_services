@@ -60,6 +60,9 @@ class ResultAnswers(models.Model):
         verbose_name = "Результат тестирования"
         verbose_name_plural = "Результаты тестирования"
 
+    def __str__(self):
+        return f"Результат теста: id: {self.id}, пользователь: {self.user}, тема: {self.topic}"
+
     def count_correct_answer(self):
         self.count_right_answers = F('count_right_answers') + 1
         self.save(update_fields=['count_right_answers'])
