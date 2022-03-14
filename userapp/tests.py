@@ -112,12 +112,3 @@ class TestUserCreate(APITestCase):
         self.assertTrue(isinstance(response.data.get('password')[0], ErrorDetail))
         self.assertTrue('blank' == response.data.get('password')[0].code)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-
-    # def test_view_list_logs_with_token(self):
-    #     auth = self.client.post('/api-token-auth/', {'email': 'mail01@mail.ru', 'password': '123454321qw'})
-    #     token = f'Token {auth.data.get("token")}'
-    #     self.client.credentials(HTTP_AUTHORIZATION=token)
-    #     response = self.client.get('/api/logs/')
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(response.data.get('count'), User.objects.all().count())
