@@ -11,7 +11,7 @@ class UserViewAdmin(admin.ModelAdmin):
     search_fields = ('email',)
     inlines = (ResultAnswersInLine,)
 
-    def save_model(self, request, obj, form, change):
+    def save_model(self, request, obj, form, change) -> None:
         if change:
             orig_obj = User.objects.get(pk=obj.pk)
             if obj.password != orig_obj.password:

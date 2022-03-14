@@ -3,7 +3,7 @@ from django.forms import BaseInlineFormSet
 
 
 class QuestionAnswersFormSet(BaseInlineFormSet):
-    def clean(self):
+    def clean(self) -> dict:
         super().clean()
         for answer in self.cleaned_data:
             if answer.get('answer').is_correct:

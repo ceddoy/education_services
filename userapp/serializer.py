@@ -11,7 +11,7 @@ class UserModelSerializer(serializers.ModelSerializer):
         fields = ("email", "password")
         extra_kwargs = {'password': {'write_only': True}, }
 
-    def validate_password(self, value):
+    def validate_password(self, value: str) -> str:
         password_validation.validate_password(value, self.instance)
         return value
 

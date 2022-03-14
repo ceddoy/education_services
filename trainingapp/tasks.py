@@ -5,7 +5,7 @@ from education_services.celery import app
 
 
 @app.task
-def send_email_to_user_result_answers(data):
+def send_email_to_user_result_answers(data: dict) -> None:
     quantity_correct_answers = data.get("result_answers").get("correct")
     quantity_wrong_answers = data.get("result_answers").get("wrong")
     topic = data.get("topic")

@@ -21,7 +21,7 @@ class QuestionRetrieveAPIView(RetrieveAPIView):
     serializer_class = QuestionModelSerializer
     queryset = Question.objects.all()
 
-    def retrieve(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs) -> Response or JsonResponse:
         instance = self.get_object()
         object_result_answers = check_user_for_retesting(request, instance)
         if object_result_answers:
@@ -32,9 +32,9 @@ class QuestionRetrieveAPIView(RetrieveAPIView):
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
-    def create_object_result_answers(self, question):
+    def create_object_result_answers(self, question: Question) -> None:
         ResultAnswers.objects.create(user=self.request.user, topic=question.topic,
                                      list_questions=create_list_questions(question.topic))
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs) -> JsonResponse:
         return JsonResponse(result_answer_question(request, **kwargs))

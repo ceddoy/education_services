@@ -18,7 +18,7 @@ class TopicModelSerializer(serializers.ModelSerializer):
         model = Topic
         fields = ("id", "title", 'description', 'start_testing_url')
 
-    def get_page_begin_testing(self, topic):
+    def get_page_begin_testing(self, topic) -> dict or str:
         question = Question.objects.filter(topic=topic).first()
         if question:
             return get_next_page(question.id)

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models import QuerySet
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
@@ -49,7 +50,7 @@ class ResultAnswersInLine(admin.TabularInline):
 
     list_display_links = ("__str__", "topic")
 
-    def objects_result_answers_link(self, obj):
+    def objects_result_answers_link(self, obj: ResultAnswers) -> str:
         url = reverse("admin:trainingapp_resultanswers_change", args=(obj.id,))
         return mark_safe(f'<a href="{url}">{obj.id}</a>')
     verbose_name = 'История прохождения тестов'
@@ -62,6 +63,6 @@ class ResultAnswersViewAdmin(admin.ModelAdmin):
     search_fields = ('id', 'user__email', 'topic__title')
     raw_id_fields = ('user', 'topic')
 
-    def get_queryset(self, request):
+    def get_queryset(self, request) -> QuerySet:
         qs = super().get_queryset(request)
         return qs.select_related('user', 'topic')
