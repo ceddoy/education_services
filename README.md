@@ -52,7 +52,7 @@ python manage.py runserver
 ```
 
 ### API points:
-в качестве тестирования прошу использовать приложение postman, либо сайт https://www.postman.com/
+в качестве тестирования прошу использовать приложение postman, либо сайт https://www.postman.com/, можно также http://localhost:8000/swagger/
 
 **1) Регистрация пользователей  -**
 **/api/clients/create/**
