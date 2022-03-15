@@ -7,7 +7,8 @@ schema_view = get_schema_view(
     openapi.Info(
         title="Education Services",
         default_version='v1',
-        description="Test description",
+        description="Полное описание API в readme https://github.com/ceddoy/education_services\n"
+                    "После получения токена, введите его в 'Authorize' -> Token (токен)",
         license=openapi.License(name="BSD License"),
     ),
     public=True,
