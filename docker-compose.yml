@@ -18,7 +18,7 @@ services:
     volumes:
       - .:/backend_service
     ports:
-      - "1568:8080"
+      - "8000:8000"
     depends_on:
       - db
   redis:
