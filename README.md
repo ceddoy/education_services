@@ -180,4 +180,6 @@ JSON ответ:
     }
 }
 ```
+*Кратная скрин-инструкция, как создать вопрос с ответами:*
 
+![Image alt](https://github.com/ceddoy/education_services/raw/master/images_for_readme/screen_admin-panel.jpg)
