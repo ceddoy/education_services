@@ -116,7 +116,7 @@ EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-REDIS_HOST = '0.0.0.0'
+REDIS_HOST = 'redis'
 REDIS_PORT = secrets.PORT_REDIS
 REDIS_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
 CELERY_BROKER_URL = REDIS_URL
@@ -136,3 +136,5 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+CSRF_TRUSTED_ORIGINS = ['https://22b6-37-195-145-56.ap.ngrok.io']
