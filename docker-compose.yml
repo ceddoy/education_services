@@ -12,9 +12,11 @@ services:
     ports:
       - "5440:5432"
     volumes:
-      - ./var/data/postgresql:/var/lib/postgresql
+      - pg_data:/var/lib/postgresql
   backend:
     build: .
+    command: bash -c "python /backend_service/manage.py migrate --noinput &&
+             python /backend_service/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/backend_service
     ports:
@@ -25,3 +27,13 @@ services:
     image: redis:latest
     ports:
       - "6391:6379"
+  celery:
+    build: .
+    command: celery -A education_services worker -l info
+    links:
+      - redis
+    depends_on:
+      - db
+      - redis
+volumes:
+  pg_data:
